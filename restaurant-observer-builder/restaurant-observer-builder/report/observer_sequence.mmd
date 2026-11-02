@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Main
+    participant Order
+    participant KitchenListener
+    participant CustomerListener
+
+    Main->>Order: subscribe(KitchenListener)
+    Main->>Order: subscribe(CustomerListener)
+    Main->>Order: setStatus(COOKING)
+    Order->>Order: check transition NEW -> COOKING
+    Order->>KitchenListener: onStatusChanged(order, NEW, COOKING)
+    Order->>CustomerListener: onStatusChanged(order, NEW, COOKING)
+    Main->>Order: setStatus(READY)
+    Order->>Order: check transition COOKING -> READY
+    Order->>KitchenListener: onStatusChanged(order, COOKING, READY)
+    Order->>CustomerListener: onStatusChanged(order, COOKING, READY)
