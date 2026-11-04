@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kitchen · Restaurant Ordering</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">Restaurant</a>
+    <nav>
+      <a href="index.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <a href="status.html">Order status</a>
+      <a href="kitchen.html" class="active">Kitchen</a>
+    </nav>
+  </header>
+
+  <main class="container wide">
+    <h1>Kitchen</h1>
+    <p class="subtitle">Move orders forward: NEW → COOKING → READY. Customers see the change on their status page.</p>
+    <p id="source-note" class="note"></p>
+
+    <div class="board">
+      <section class="column" data-status="NEW">
+        <h2>New <span class="count" id="count-NEW">0</span></h2>
+        <div class="tickets" id="col-NEW"></div>
+      </section>
+      <section class="column" data-status="COOKING">
+        <h2>Cooking <span class="count" id="count-COOKING">0</span></h2>
+        <div class="tickets" id="col-COOKING"></div>
+      </section>
+      <section class="column" data-status="READY">
+        <h2>Ready <span class="count" id="count-READY">0</span></h2>
+        <div class="tickets" id="col-READY"></div>
+      </section>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/kitchen.js"></script>
+</body>
+</html>
