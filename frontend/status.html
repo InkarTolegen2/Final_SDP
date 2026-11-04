@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Order status · Restaurant Ordering</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">Restaurant</a>
+    <nav>
+      <a href="index.html">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <a href="status.html" class="active">Order status</a>
+      <a href="kitchen.html">Kitchen</a>
+    </nav>
+  </header>
+
+  <main class="container narrow">
+    <h1 id="title">Order status</h1>
+    <p class="subtitle" id="subtitle">The page updates automatically every 2 seconds.</p>
+    <p id="source-note" class="note"></p>
+
+    <div id="no-order" class="empty" hidden>
+      <p>No order yet.</p>
+      <a class="btn" href="index.html">Go to menu</a>
+    </div>
+
+    <section id="order-box" class="panel" hidden>
+      <ol class="steps" id="steps">
+        <li data-status="NEW"><span class="dot">1</span><span class="step-name">Accepted</span><span class="step-hint">Order is in the queue</span></li>
+        <li data-status="COOKING"><span class="dot">2</span><span class="step-name">Cooking</span><span class="step-hint">The kitchen is on it</span></li>
+        <li data-status="READY"><span class="dot">3</span><span class="step-name">Ready</span><span class="step-hint">Enjoy your meal!</span></li>
+      </ol>
+      <p id="status-text" class="status-text"></p>
+
+      <h2 class="panel-title">Your order</h2>
+      <ul id="order-items" class="cart-list compact"></ul>
+      <dl class="summary" id="order-summary"></dl>
+    </section>
+
+    <section id="other-orders" class="others" hidden>
+      <h2 class="panel-title">Other orders</h2>
+      <div id="order-links" class="chips"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/status.js"></script>
+</body>
+</html>

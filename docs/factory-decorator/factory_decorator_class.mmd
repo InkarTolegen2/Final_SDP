@@ -1,0 +1,55 @@
+classDiagram
+    direction TB
+    class Meal {
+        <<interface>>
+        +getName() String
+        +getPrice() double
+        +getDescription() String
+    }
+    class Pizza
+    class Burger
+    class Drink
+    class MealFactory {
+        +TYPES List~String~
+        +create(type String)$ Meal
+    }
+    class MealDecorator {
+        <<abstract>>
+        #meal Meal
+        +getName() String
+        +getPrice() double
+        +getDescription() String
+    }
+    class CheeseDecorator {
+        +getPrice() double
+        +getDescription() String
+    }
+    class SauceDecorator {
+        +getPrice() double
+        +getDescription() String
+    }
+    class LargeSizeDecorator {
+        +getPrice() double
+        +getDescription() String
+    }
+    class Toppings {
+        +apply(meal Meal, topping String)$ Meal
+        +applyAll(meal Meal, toppings List)$ Meal
+    }
+    class OrderBuilder {
+        +addDish(meal Meal) OrderBuilder
+    }
+
+    Meal <|.. Pizza
+    Meal <|.. Burger
+    Meal <|.. Drink
+    Meal <|.. MealDecorator
+    MealDecorator o-- Meal : wraps
+    MealDecorator <|-- CheeseDecorator
+    MealDecorator <|-- SauceDecorator
+    MealDecorator <|-- LargeSizeDecorator
+    MealFactory ..> Pizza : creates
+    MealFactory ..> Burger : creates
+    MealFactory ..> Drink : creates
+    Toppings ..> MealDecorator : creates
+    OrderBuilder ..> Meal : uses

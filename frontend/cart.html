@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cart · Restaurant Ordering</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">Restaurant</a>
+    <nav>
+      <a href="index.html">Menu</a>
+      <a href="cart.html" class="active">Cart <span id="cart-count" class="badge">0</span></a>
+      <a href="status.html">Order status</a>
+      <a href="kitchen.html">Kitchen</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Cart</h1>
+    <p class="subtitle">Check your dishes, choose a discount and payment, then place the order.</p>
+    <p id="source-note" class="note"></p>
+
+    <div id="empty" class="empty" hidden>
+      <p>Your cart is empty.</p>
+      <a class="btn" href="index.html">Go to menu</a>
+    </div>
+
+    <div id="cart-layout" class="two-col" hidden>
+      <section class="panel">
+        <h2 class="panel-title">Dishes</h2>
+        <ul id="cart-items" class="cart-list"></ul>
+        <button type="button" id="clear-cart" class="link-btn">Clear cart</button>
+      </section>
+
+      <form id="checkout" class="panel" novalidate>
+        <h2 class="panel-title">Order details</h2>
+
+        <div class="row">
+          <label class="field">
+            <span>Table number</span>
+            <input type="number" id="table" min="1" max="99" placeholder="e.g. 5" required>
+          </label>
+        </div>
+        <label class="field">
+          <span>Comment for the kitchen</span>
+          <input type="text" id="comment" maxlength="120" placeholder="e.g. no onion">
+        </label>
+
+        <fieldset class="choice">
+          <legend>Discount</legend>
+          <label class="option"><input type="radio" name="discount" value="none" checked> <span>No discount</span></label>
+          <label class="option"><input type="radio" name="discount" value="percent"> <span>Loyalty card</span><span class="plus" id="percent-label"></span></label>
+          <label class="option"><input type="radio" name="discount" value="promo"> <span>Promo code</span></label>
+          <div id="promo-box" class="promo" hidden>
+            <input type="text" id="promo" placeholder="Enter code (try FIRST)" autocomplete="off">
+            <span id="promo-msg" class="promo-msg"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="choice">
+          <legend>Payment</legend>
+          <div class="seg">
+            <label><input type="radio" name="payment" value="card" checked> <span>Card</span></label>
+            <label><input type="radio" name="payment" value="cash"> <span>Cash</span></label>
+          </div>
+        </fieldset>
+
+        <dl class="summary">
+          <div><dt>Subtotal</dt><dd id="subtotal"></dd></div>
+          <div><dt id="discount-name">Discount</dt><dd id="discount-amount"></dd></div>
+          <div class="grand"><dt>Total</dt><dd id="total"></dd></div>
+        </dl>
+
+        <p id="form-error" class="form-error" role="alert"></p>
+        <button type="submit" class="btn wide" id="place">Place order</button>
+      </form>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

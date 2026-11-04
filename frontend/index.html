@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Menu · Restaurant Ordering</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="logo" href="index.html">Restaurant</a>
+    <nav>
+      <a href="index.html" class="active">Menu</a>
+      <a href="cart.html">Cart <span id="cart-count" class="badge">0</span></a>
+      <a href="status.html">Order status</a>
+      <a href="kitchen.html">Kitchen</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Menu</h1>
+    <p class="subtitle">Pick a dish, add toppings, the price updates instantly.</p>
+    <p id="source-note" class="note"></p>
+    <div id="menu" class="grid"></div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/menu.js"></script>
+</body>
+</html>
