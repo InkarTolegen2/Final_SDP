@@ -1,21 +1,25 @@
 # Restaurant Ordering System
 
-Java 17, Maven, JUnit 5. Web client: HTML/CSS/JS (backend on Javalin, person 3).
+Java 17, Maven, JUnit 5. Web client: HTML/CSS/JS.
+Backend: REST API on the JDK built-in HTTP server (`com.sun.net.httpserver`) with a small own JSON parser, so no external libraries are needed.
 
 ```
 backend/
   src/main/java/restaurant/
-    Main.java            demo of Builder + Observer (person 3 will replace it with Javalin start)
+    Main.java            starts the web server on http://localhost:7070
     meal/                Meal, Pizza, Burger, Drink, MealFactory, MealDemo        (person 1)
     decorator/           MealDecorator, Cheese/Sauce/LargeSizeDecorator, Toppings (person 1)
-    order/               Order, OrderBuilder, OrderStatus                         (person 2)
+    order/               Order, OrderBuilder, OrderStatus, OrderDemo              (person 2)
     observer/            OrderListener, KitchenListener, CustomerListener         (person 2)
     payment/             PaymentStrategy, NoDiscount, PercentDiscount,
                          PromoCodeDiscount, PaymentContext, PaymentDemo           (person 3)
-    api/, facade/        Routes (Javalin), RestaurantFacade                       (person 3, TODO)
+    facade/              RestaurantFacade                                         (person 3)
+    api/                 Routes (REST endpoints + static files), Json             (person 3)
   src/test/java/restaurant/
     meal/MealFactoryDecoratorTest.java
     order/OrderObserverTest.java
+    facade/RestaurantFacadeTest.java
+    api/JsonTest.java, api/RoutesTest.java   (starts the server and calls the API over HTTP)
 frontend/
   index.html    + js/menu.js      menu, toppings, price recalculation
   cart.html     + js/cart.js      cart, table/comment, discount (Strategy), card/cash, POST /order
@@ -31,20 +35,22 @@ docs/
 
 ## Run
 
+**Web app (backend + frontend):** run `restaurant.Main` (green ▶ in IntelliJ, or `cd backend` → `mvn compile exec:java`),
+then open http://localhost:7070. Kitchen panel: http://localhost:7070/kitchen.html
+(open it in a second tab, move the order forward and watch the status page and the server console).
+
+**Tests and console demos:**
+
 ```
 cd backend
 mvn test
-mvn compile exec:java -Dexec.mainClass=restaurant.meal.MealDemo   # Factory + Decorator
-mvn compile exec:java -Dexec.mainClass=restaurant.Main            # Builder + Observer
-mvn compile exec:java -Dexec.mainClass=restaurant.payment.PaymentDemo   # Strategy
+mvn compile exec:java -Dexec.mainClass=restaurant.meal.MealDemo        # Factory + Decorator
+mvn compile exec:java -Dexec.mainClass=restaurant.order.OrderDemo      # Builder + Observer
+mvn compile exec:java -Dexec.mainClass=restaurant.payment.PaymentDemo  # Strategy
 ```
 
-Frontend without the backend (demo mode): run a static server in `frontend/`
-(`python -m http.server`, or Live Server in VS Code) and open `http://localhost:8000`.
-Orders are then stored in the browser's localStorage: open `status.html` and `kitchen.html`
-in two tabs, press the buttons in the kitchen and the status page updates by itself.
-When Javalin serves `GET /menu`, all pages switch to the real API automatically
-(Javalin should serve the `frontend/` folder as static files, so pages and API share one origin).
+**Frontend only (demo mode, no Java):** `python -m http.server` inside `frontend/`, open http://localhost:8000.
+Orders are then kept in the browser's localStorage.
 
 ## Contracts for the team
 

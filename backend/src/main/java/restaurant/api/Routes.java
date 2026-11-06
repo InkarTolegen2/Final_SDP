@@ -36,7 +36,12 @@ public class Routes {
     public HttpServer start(int port) throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", this::handle);
-        server.setExecutor(Executors.newFixedThreadPool(8));
+        // daemon workers: after server.stop() the program (and mvn test) can exit
+        server.setExecutor(Executors.newFixedThreadPool(8, r -> {
+            Thread t = new Thread(r, "http-worker");
+            t.setDaemon(true);
+            return t;
+        }));
         server.start();
         return server;
     }
